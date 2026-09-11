@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.command.DefaultPermissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -44,7 +45,7 @@ final class EnchCommand {
 
     static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("ench")
-                .requires(source -> source.hasPermissionLevel(2))
+                .requires(source -> source.getPermissions().hasPermission(DefaultPermissions.GAMEMASTERS))
                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                         .then(CommandManager.argument("enchantments", StringArgumentType.greedyString())
                                 .executes(EnchCommand::execute))));
