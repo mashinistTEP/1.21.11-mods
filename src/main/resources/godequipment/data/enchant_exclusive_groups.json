@@ -1,0 +1,9 @@
+[
+  ["protection", "fire_protection", "blast_protection", "projectile_protection"],
+  ["sharpness", "smite", "bane_of_arthropods", "density", "breach"],
+  ["depth_strider", "frost_walker"],
+  ["silk_touch", "fortune"],
+  ["infinity", "mending"],
+  ["loyalty", "riptide", "channeling"],
+  ["multishot", "piercing"]
+]

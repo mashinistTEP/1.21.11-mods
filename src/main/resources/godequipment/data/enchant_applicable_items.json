@@ -1,0 +1,53 @@
+{
+  "_comment": "Ключ — id зачарования, значение — список подстрок id предмета, при наличии хотя бы одной из которых зачарование считается 'нормально применимым'. Если у зачарования нет записи в этом файле — ограничений нет (например, unbreaking/mending/проклятия действуют почти на всё снаряжение). Это упрощённая проверка по ключевым словам, а не точная копия внутренних тегов игры — её можно свободно донастраивать под себя.",
+
+  "sharpness": ["sword", "axe"],
+  "smite": ["sword", "axe"],
+  "bane_of_arthropods": ["sword", "axe"],
+  "sweeping": ["sword"],
+  "knockback": ["sword"],
+  "fire_aspect": ["sword", "axe", "mace"],
+  "looting": ["sword", "axe", "spear"],
+
+  "efficiency": ["pickaxe", "axe", "shovel", "hoe", "shears"],
+  "silk_touch": ["pickaxe", "axe", "shovel", "hoe"],
+  "fortune": ["pickaxe", "axe", "shovel", "hoe"],
+
+  "power": ["bow"],
+  "punch": ["bow"],
+  "flame": ["bow"],
+  "infinity": ["bow"],
+
+  "luck_of_the_sea": ["fishing_rod"],
+  "lure": ["fishing_rod"],
+
+  "loyalty": ["trident"],
+  "impaling": ["trident"],
+  "riptide": ["trident"],
+  "channeling": ["trident"],
+
+  "multishot": ["crossbow"],
+  "quick_charge": ["crossbow"],
+  "piercing": ["crossbow"],
+
+  "soul_speed": ["boots"],
+  "swift_sneak": ["leggings"],
+  "frost_walker": ["boots"],
+  "depth_strider": ["boots"],
+  "feather_falling": ["boots"],
+
+  "respiration": ["helmet", "turtle_helmet"],
+  "aqua_affinity": ["helmet", "turtle_helmet"],
+
+  "protection": ["helmet", "chestplate", "leggings", "boots", "turtle_helmet"],
+  "fire_protection": ["helmet", "chestplate", "leggings", "boots", "turtle_helmet"],
+  "blast_protection": ["helmet", "chestplate", "leggings", "boots", "turtle_helmet"],
+  "projectile_protection": ["helmet", "chestplate", "leggings", "boots", "turtle_helmet"],
+  "thorns": ["helmet", "chestplate", "leggings", "boots", "turtle_helmet"],
+
+  "density": ["mace"],
+  "breach": ["mace"],
+  "wind_burst": ["mace"],
+
+  "lunge": ["spear"]
+}

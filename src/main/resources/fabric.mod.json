@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "godequipment",
+  "version": "${version}",
+  "name": "GOD EQUIPMENT",
+  "description": "Переписывает /give и добавляет /ench со своим синтаксисом зачарований {ench: имя_уровень, ...} на русском или английском. Доп. возможности (снятие лимита уровня, любые сочетания зачарований, любые предметы) включаются через config/godequipment.json.",
+  "authors": [
+    "mashinistTEP"
+  ],
+  "contact": {
+    "sources": "https://github.com/mashinistTEP/1.21.11-mods"
+  },
+  "license": "MIT",
+  "icon": "",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.godequipment.GodEquipmentMod"
+    ]
+  },
+  "mixins": [
+    "godequipment.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "fabric-api": "*",
+    "minecraft": "1.21.11",
+    "java": ">=21"
+  }
+}

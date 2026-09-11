@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.godequipment.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "GiveCommandMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
