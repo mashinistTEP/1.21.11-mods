@@ -7,6 +7,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.command.permission.LeveledPermissionPredicate;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.ItemStackArgument;
 import net.minecraft.command.argument.ItemStackArgumentType;
@@ -53,7 +54,7 @@ public final class CustomGiveCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         dispatcher.register(CommandManager.literal("give")
-                .requires(source -> source.hasPermissionLevel(2))
+                .requires(source -> source.getPermissions().hasPermission(LeveledPermissionPredicate.GAMEMASTERS))
                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                         .then(CommandManager.argument("spec", StringArgumentType.greedyString())
                                 .executes(ctx -> execute(ctx, registryAccess)))));
@@ -91,11 +92,11 @@ public final class CustomGiveCommand {
             enchants = filterApplicability(enchants, itemId, source);
         }
 
-        Registry<Enchantment> enchantRegistry = source.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
+        Registry<Enchantment> enchantRegistry = source.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
         LinkedHashMap<String, Integer> validEnchants = new LinkedHashMap<>();
         for (Map.Entry<String, Integer> e : enchants.entrySet()) {
             RegistryKey<Enchantment> key = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of("minecraft", e.getKey()));
-            Optional<? extends RegistryEntry<Enchantment>> entry = enchantRegistry.getEntry(key);
+            Optional<RegistryEntry.Reference<Enchantment>> entry = enchantRegistry.getEntry(key.getValue());
             if (entry.isEmpty()) {
                 source.sendError(Text.literal("GOD EQUIPMENT: неизвестное зачарование \"" + e.getKey() + "\" — пропущено"));
                 continue;

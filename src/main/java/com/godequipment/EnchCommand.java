@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -43,7 +44,7 @@ final class EnchCommand {
 
     static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("ench")
-                .requires(source -> source.hasPermissionLevel(2))
+                .requires(source -> source.getPermissions().hasPermission(LeveledPermissionPredicate.GAMEMASTERS))
                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                         .then(CommandManager.argument("enchantments", StringArgumentType.greedyString())
                                 .executes(EnchCommand::execute))));
@@ -64,13 +65,13 @@ final class EnchCommand {
             requested = filterExclusive(requested);
         }
 
-        Registry<Enchantment> enchantRegistry = source.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
+        Registry<Enchantment> enchantRegistry = source.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
 
         int affected = 0;
         for (ServerPlayerEntity player : targets) {
             ItemStack stack = player.getMainHandStack();
             if (stack.isEmpty()) {
-                source.sendError(Text.literal("GOD EQUIPMENT: у " + player.getGameProfile().getName() + " пустая рука — пропущено"));
+                source.sendError(Text.literal("GOD EQUIPMENT: у " + player.getStringifiedName() + " пустая рука — пропущено"));
                 continue;
             }
 
@@ -82,12 +83,12 @@ final class EnchCommand {
             int applied = 0;
             for (Map.Entry<String, Integer> e : toApply.entrySet()) {
                 RegistryKey<Enchantment> key = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of("minecraft", e.getKey()));
-                Optional<? extends RegistryEntry<Enchantment>> entry = enchantRegistry.getEntry(key);
+                Optional<RegistryEntry.Reference<Enchantment>> entry = enchantRegistry.getEntry(key.getValue());
                 if (entry.isEmpty()) {
                     source.sendError(Text.literal("GOD EQUIPMENT: неизвестное зачарование \"" + e.getKey() + "\" — пропущено"));
                     continue;
                 }
-                stack.enchant(entry.get(), e.getValue());
+                EnchantmentHelper.apply(stack, builder -> builder.set(entry.get(), e.getValue()));
                 applied++;
             }
 
