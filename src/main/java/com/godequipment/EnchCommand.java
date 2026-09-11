@@ -44,7 +44,7 @@ final class EnchCommand {
 
     static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("ench")
-                .requires(source -> source.getPermissions().hasPermission(LeveledPermissionPredicate.GAMEMASTERS))
+                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                         .then(CommandManager.argument("enchantments", StringArgumentType.greedyString())
                                 .executes(EnchCommand::execute))));
